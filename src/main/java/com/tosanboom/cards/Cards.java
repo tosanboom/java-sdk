@@ -16,4 +16,21 @@ public class Cards {
 
         return Requests.sendRequest(httpRequest, CardBalance.class);
     }
+
+    /**
+     * Calling the card transfer service that return information of transfer.
+     *
+     * @param request Encapsulates a card transfer request parameters such as the card credentials and destination info.
+     * @param boomApi Encapsulates common headers to be sent over the wire to the boom API.
+     * @return Information of transfer.
+     */
+    public static CardTransfer transfer(CardTransferRequest request, BoomApi boomApi) {
+        String url = boomApi.baseUrl() + "cards/transfer";
+        Request httpRequest = Requests.withCommonHeaders(new Request.Builder(), boomApi)
+                .url(url)
+                .post(Json.of(request))
+                .build();
+
+        return Requests.sendRequest(httpRequest, CardTransfer.class);
+    }
 }
