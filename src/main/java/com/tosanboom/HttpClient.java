@@ -2,6 +2,9 @@ package com.tosanboom;
 
 import okhttp3.OkHttpClient;
 
+/**
+ * @author Ali Dehghani
+ */
 public class HttpClient {
     public static OkHttpClient getInstance() {
         return HttpClientHolder.INSTANCE;
