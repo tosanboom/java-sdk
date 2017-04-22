@@ -16,4 +16,22 @@ public class Cards {
 
         return Requests.sendRequest(httpRequest, CardBalance.class);
     }
+
+    /**
+     * Calling CardHolder service that return the owner name of card
+     *
+     * @param request Encapsulated credential's information of card
+     * @param boomApi  Encapsulated header's parameters that must be send to request service, and default address url.
+     * @return The response of calling service {@link CardHolder}
+     */
+    public static CardHolder getHolder(CardHolderRequest request, BoomApi boomApi) {
+        String url = boomApi.baseUrl() + "cards/" + request.pan + "/holder";
+        Request.Builder builder = new Request.Builder();
+        Request httpRequest = Requests.withCommonHeaders(builder, boomApi)
+                .url(url)
+                .post(Json.of(request))
+                .build();
+
+        return Requests.sendRequest(httpRequest, CardHolder.class);
+    }
 }
