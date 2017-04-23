@@ -2,7 +2,7 @@ package com.tosanboom.cards
 
 import com.tosanboom.Bank
 import com.tosanboom.BoomApi
-import com.tosanboom.RequestFailedException
+import com.tosanboom.RestApiException
 import spock.lang.Specification
 
 class CardListTest extends Specification {
@@ -60,7 +60,7 @@ class CardListTest extends Specification {
             Cards.getCards(request, boomApi)
 
         then:
-            def e = thrown(RequestFailedException)
+            def e = thrown(RestApiException)
             e.errorResponse.code == "078"
 
         where:
