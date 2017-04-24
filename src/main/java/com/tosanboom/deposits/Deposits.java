@@ -9,10 +9,10 @@ public class Deposits {
     /**
      * Get list of statements of deposit
      *
-     * @param request Encapsulates the filtering parameters to get statements of the given depositNumber
+     * @param request Encapsulates the filtering parameters to get statements of the given deposit number
      * @param boomApi Encapsulates the contextual information about the boom api
      * @return List of {@linkplain com.tosanboom.deposits.StatementList.Statement} of the given
-     * depositNumber
+     * deposit number
      * @throws com.tosanboom.RestApiException When a 4xx/5xx error returns from REST API
      * @throws com.tosanboom.FailedRequestException When we couldn't send the request for whatever reason
      * @throws com.tosanboom.JsonException When something went wrong during JSON serialization/de-serialization

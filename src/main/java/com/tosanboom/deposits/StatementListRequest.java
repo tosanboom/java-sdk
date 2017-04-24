@@ -39,11 +39,9 @@ public class StatementListRequest {
     final String description;
     final StatementActionType action;
 
-    public StatementListRequest(String depositNumber, String fromDate, String toDate, Long offset,
+    private StatementListRequest(String depositNumber, String fromDate, String toDate, Long offset,
                                 Long length, OrderType order, String description, StatementActionType action) {
-        /**
-         * Check validation of some parameters
-         */
+
         depositNotEmptyOrNull(depositNumber);
         offsetNotNegative(offset);
         lengthNotNegative(length);
