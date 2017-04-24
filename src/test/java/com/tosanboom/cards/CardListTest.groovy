@@ -2,7 +2,7 @@ package com.tosanboom.cards
 
 import com.tosanboom.Bank
 import com.tosanboom.BoomApi
-import com.tosanboom.RequestFailedException
+import com.tosanboom.RestApiException
 import spock.lang.Specification
 
 class CardListTest extends Specification {
@@ -17,13 +17,13 @@ class CardListTest extends Specification {
                     .withSession("44c18c60-b1f9-4f61-806d-ce4f681c6c9f")
                     .build()
 
-        def request = CardListRequest.newBuilder()
-                                         .withPan(pan)
-                                         .withDepositNumber(depositNumber)
-                                         .withCardStatus(cardStatus)
-                                         .withOffset(offset)
-                                         .withLength(length)
-                                         .build()
+            def request = CardListRequest.newBuilder()
+                                             .withPan(pan)
+                                             .withDepositNumber(depositNumber)
+                                             .withCardStatus(cardStatus)
+                                             .withOffset(offset)
+                                             .withLength(length)
+                                             .build()
 
         when:
             def res = Cards.getCards(request, boomApi)
@@ -46,7 +46,7 @@ class CardListTest extends Specification {
                     .withDeviceId("123456789")
                     .setSandbox(true)
                     .withBank(Bank.ANSAR)
-                    .withSession("f12fd05c-8f43-4bea-b467-8eb782e51091")
+                    .withSession("b3c8b58e-7d9e-4122-bca6-03fb85dcaed3")
                     .build()
 
             def request =  CardListRequest.newBuilder()
@@ -60,14 +60,10 @@ class CardListTest extends Specification {
             Cards.getCards(request, boomApi)
 
         then:
-            def e = thrown(RequestFailedException)
-            e.errorResponse.code == "078"
+            RestApiException e = thrown()
 
         where:
             pan                  |depositNumber        |cardStatus  |offset  |length
-            "6393461031212023"   |null                 |null        |0       |2
-            null                 |"124-812-3335585-21" |null        |0       |2
-            "63934610312120264"  |null                 |null        |0       |2
-            null                 |"124-812-33355-1"    |null        |0       |2
+            "639346103121202655"   |null                 |null        |0       |2
     }
 }
