@@ -2,7 +2,7 @@ package com.tosanboom.cards
 
 import com.tosanboom.Bank
 import com.tosanboom.BoomApi
-import com.tosanboom.RequestFailedException
+import com.tosanboom.RestApiException
 import spock.lang.Specification
 
 class CardsHolderTest extends Specification {
@@ -42,7 +42,7 @@ class CardsHolderTest extends Specification {
             def res = Cards.getHolder(request, boomApi)
 
         then:
-            RequestFailedException ex = thrown()
+            RestApiException ex = thrown()
             ex.errorResponse.code == "037"
     }
 
@@ -62,7 +62,7 @@ class CardsHolderTest extends Specification {
             def res = Cards.getHolder(request, boomApi)
 
         then:
-            RequestFailedException ex = thrown()
+            RestApiException ex = thrown()
             ex.errorResponse.code == ""
     }
 
@@ -82,7 +82,7 @@ class CardsHolderTest extends Specification {
             def res = Cards.getHolder(request, boomApi)
 
         then:
-            RequestFailedException ex = thrown()
+            RestApiException ex = thrown()
             ex.errorResponse.code == ""
     }
 
@@ -102,7 +102,7 @@ class CardsHolderTest extends Specification {
             def res = Cards.getHolder(request, boomApi)
 
         then:
-            RequestFailedException ex = thrown()
+            RestApiException ex = thrown()
             ex.errorResponse.code == ""
     }
 }
