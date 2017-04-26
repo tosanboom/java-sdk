@@ -39,7 +39,7 @@ class CardsHolderTest extends Specification {
             def request = new CardHolderRequest("675467578564646", "334534", "238", "9911", null)
 
         when:
-            def res = Cards.getHolder(request, boomApi)
+            Cards.getHolder(request, boomApi)
 
         then:
             RestApiException ex = thrown()
@@ -59,7 +59,7 @@ class CardsHolderTest extends Specification {
             def request = new CardHolderRequest("6393461031212026", "11111", "238", "9911", null)
 
         when:
-            def res = Cards.getHolder(request, boomApi)
+            Cards.getHolder(request, boomApi)
 
         then:
             RestApiException ex = thrown()
@@ -79,7 +79,7 @@ class CardsHolderTest extends Specification {
             def request = new CardHolderRequest("6393461031212026", "334534", "111", "9911", null)
 
         when:
-            def res = Cards.getHolder(request, boomApi)
+            Cards.getHolder(request, boomApi)
 
         then:
             RestApiException ex = thrown()
@@ -99,7 +99,7 @@ class CardsHolderTest extends Specification {
             def request = new CardHolderRequest("6393461031212026", "334534", "238", "22", null)
 
         when:
-            def res = Cards.getHolder(request, boomApi)
+            Cards.getHolder(request, boomApi)
 
         then:
             RestApiException ex = thrown()
