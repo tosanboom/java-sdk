@@ -12,6 +12,7 @@ import okhttp3.Request;
  * {@linkplain BoomApi}.
  *
  * @author Ali Dehghani
+ * @author Marjan Mehranfar
  */
 public class Cards {
     /**
@@ -26,6 +27,9 @@ public class Cards {
      * @throws com.tosanboom.JsonException When something went wrong during JSON serialization/de-serialization
      */
     public static CardBalance getBalance(CardBalanceRequest request, BoomApi boomApi) {
+        Asserts.notNull(request, "request can't be a null value");
+        Asserts.notNull(boomApi, "boomApi can't be a null value");
+
         String url = boomApi.baseUrl() + "cards/" + request.pan + "/balance";
         Request.Builder builder = new Request.Builder();
         Request httpRequest = Requests.withCommonHeaders(builder, boomApi)
