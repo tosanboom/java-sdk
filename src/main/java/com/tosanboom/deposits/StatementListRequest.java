@@ -1,7 +1,5 @@
 package com.tosanboom.deposits;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -31,26 +29,21 @@ import java.util.Date;
  */
 public class StatementListRequest {
     final String depositNumber;
-    final String fromDate;
-    final String toDate;
+    final Date fromDate;
+    final Date toDate;
     final Long offset;
     final Long length;
     final OrderType order;
     final String description;
     final StatementActionType action;
 
-    private StatementListRequest(String depositNumber, String fromDate, String toDate, Long offset,
+    private StatementListRequest(String depositNumber, Date fromDate, Date toDate, Long offset,
                                 Long length, OrderType order, String description, StatementActionType action) {
 
         depositNotEmptyOrNull(depositNumber);
         offsetNotNegative(offset);
         lengthNotNegative(length);
-
-        if (fromDate != null)
-            dateIsValidFormat(fromDate);
-
-        if (toDate != null)
-            dateIsValidFormat(toDate);
+        validateTimeSpan(fromDate, toDate);
 
         this.depositNumber = depositNumber;
         this.fromDate = fromDate;
@@ -82,55 +75,103 @@ public class StatementListRequest {
 
     public static class Builder {
         private String depositNumber;
-        private String fromDate;
-        private String toDate;
+        private Date fromDate;
+        private Date toDate;
         private Long offset;
         private Long length;
         private OrderType order;
         private String description;
         private StatementActionType action;
 
+        /**
+         * (Mandatory) The deposit number for the account to list its statements
+         *
+         * @param depositNumber The deposit number
+         */
         public Builder withDepositNumber(String depositNumber) {
             this.depositNumber = depositNumber;
             return this;
         }
 
-        public Builder withFromDate(String fromDate) {
+        /**
+         * (Optional) Sets the starting point to show statements after that. If this value and
+         * {@linkplain #toDate} were both given, <strong>{@linkplain #fromDate} shouldn't be after than
+         * {@linkplain #toDate}.</strong>
+         *
+         * @param fromDate The from date
+         */
+        public Builder withFromDate(Date fromDate) {
             this.fromDate = fromDate;
             return this;
         }
 
-        public Builder withToDate(String toDate) {
+        /**
+         * (Optional) Sets the endpoint for statements filtering. If this value and {@linkplain #fromDate} were both given,
+         * <strong>{@linkplain #fromDate} shouldn't be after than {@linkplain #toDate}.</strong>
+         *
+         * @param toDate The to date
+         */
+        public Builder withToDate(Date toDate) {
             this.toDate = toDate;
             return this;
         }
 
+        /**
+         * (Optional) Determines the number of elements to skip before the first element to return. If given,
+         * the value should be greater than or equal to zero.
+         *
+         * @param offset The offset from the beginning
+         */
         public Builder withOffset(Long offset) {
             this.offset = offset;
             return this;
         }
 
+        /**
+         * (Optional) Determines each page size. If given, this value should be greater than zero.
+         *
+         * @param length The length of page
+         */
         public Builder withLength(Long length) {
             this.length = length;
             return this;
         }
 
+        /**
+         * (Optional) Determines the order of returned statements. You can order statements either
+         * ascending or descending based on this parameter.
+         *
+         * @param order The order type
+         */
         public Builder withOrder(OrderType order) {
             this.order = order;
             return this;
         }
 
+        /**
+         * (Optional) Filtering statements based on {@code description}
+         *
+         * @param description The description
+         */
         public Builder withDescription(String description) {
             this.description = description;
             return this;
         }
 
+        /**
+         * (Optional) Filtering statements based on the type of action that statement represents,
+         *                 It can be {@linkplain StatementActionType#CREDIT} or {@linkplain StatementActionType#DEBIT}
+         *
+         * @param action The type of action
+         */
         public Builder withAction(StatementActionType action) {
             this.action = action;
             return this;
         }
 
         /**
+         * Building an instance of {@linkplain StatementListRequest}
+         *
          * @throws IllegalArgumentException If one of the given parameters weren't valid
          */
         public StatementListRequest build() {
@@ -140,7 +181,7 @@ public class StatementListRequest {
 
     private void depositNotEmptyOrNull(String depositNumber) {
         if (depositNumber == null || depositNumber.trim().isEmpty()) {
-            throw new IllegalArgumentException("DepositNumber can't be a null or blank string");
+            throw new IllegalArgumentException("depositNumber can't be a null or blank string");
         }
     }
 
@@ -153,7 +194,7 @@ public class StatementListRequest {
      */
     private void offsetNotNegative(Long offset) {
         if (offset != null && offset < 0)
-            throw new IllegalArgumentException("Offset can't be a negative number");
+            throw new IllegalArgumentException("offset can't be a negative number");
     }
 
     /**
@@ -165,21 +206,11 @@ public class StatementListRequest {
      */
     private void lengthNotNegative(Long length) {
         if (length != null && length <= 0)
-            throw new IllegalArgumentException("Length can't be less than or equal to zero");
+            throw new IllegalArgumentException("length can't be less than or equal to zero");
     }
 
-    private boolean dateIsValidFormat(String value) {
-        String dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'";
-        Date date;
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
-            date = sdf.parse(value);
-            if (!value.equals(sdf.format(date))) {
-                date = null;
-            }
-        } catch (ParseException ex) {
-            throw new IllegalArgumentException("Format of date is not true, It must be in yyyy-MM-dd'T'HH:mm:ss'Z' format");
-        }
-        return date != null;
+    private void validateTimeSpan(Date fromDate, Date toDate) {
+        if(fromDate != null && toDate != null && fromDate.after(toDate))
+            throw new IllegalArgumentException("toDate should be after the fromDate");
     }
 }

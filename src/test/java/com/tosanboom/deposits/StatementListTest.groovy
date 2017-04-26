@@ -14,7 +14,7 @@ class StatementListTest extends Specification {
                     .withDeviceId("123456789")
                     .setSandbox(true)
                     .withBank(Bank.ANSAR)
-                    .withSession("175a55fc-7bf1-4572-b374-abcef4fb5e37")
+                    .withSession("85462b0c-7213-4f97-82a5-acf79d88ca0a")
                     .build()
 
             def request = StatementListRequest.newBuilder()
@@ -32,13 +32,11 @@ class StatementListTest extends Specification {
             def res = Deposits.getStatements(request, boomApi)
 
         then:
-            res.statements != null
+            res.statements() != null
 
         where:
-            depositNumber       |fromDate               |toDate                 |offset  |length |order         |action
-            "124-813-3335585-1" |null                   |null                   |0       | 10    |null          |null
-            "124-813-3335585-1" |"2016-01-01T01:37:40Z" |null                   |0       |2      |null          |null
-            "124-813-3335585-1" |"2016-01-01T01:37:40Z" |"2017-01-01T01:37:40Z" |0       |2      |OrderType.DESC|null
+            depositNumber       |fromDate                   |toDate |offset |length |order |action
+            "124-813-3335585-1" |date(2016, 4, 3)           |null   |0      |2      |null  |null
     }
     def "With invalid parameters to get list of statements, It throws exception"() {
         given:
@@ -48,7 +46,7 @@ class StatementListTest extends Specification {
                     .withDeviceId("123456789")
                     .setSandbox(true)
                     .withBank(Bank.ANSAR)
-                    .withSession("e10ac9f3-3f39-4420-bd2d-f5a5d9944b18")
+                    .withSession("a657590c-ad73-4bad-bb53-857726859bc5")
                     .build()
 
             def request = StatementListRequest.newBuilder()
@@ -63,16 +61,25 @@ class StatementListTest extends Specification {
                     .build()
 
         when:
-            def res = Deposits.getStatements(request, boomApi)
+            Deposits.getStatements(request, boomApi)
 
         then:
-            RestApiException ex = thrown()
+            thrown(RestApiException)
 
         where:
             depositNumber       |fromDate               |toDate                 |offset  |length |order |action
             "124-813-33355-1"   |null                   |null                   |0       | 10    |null  |null
-            "124-813-3335585-1" |"2016-06-01T01:37:40Z" |"2016-05-01T01:37:40Z" |0       |2      |null  |null
-            "124-813-3335585-1" |"2016-06-01T01:37:40Z" |"2016-05-01T01:37:40Z" |0       |2      |null  |null
-            "124-813-3335522-1" |"2016-06-01T01:37:40Z" |"2016-05-01T01:37:40Z" |0       |2      |null  |null
+            "124-813-3335585-1" |null                   |null                   |0       |2      |null  |null
+            "124-813-3335585-1" |null                   |null                   |0       |2      |null  |null
+            "124-813-3335522-1" |date(2016, 04, 01)     |date(2016, 05, 01)     |0       |2      |null  |null
+    }
+
+    Date date(int year, int month, int day) {
+        Calendar calendar = Calendar.getInstance()
+        calendar.set(Calendar.YEAR, year)
+        calendar.set(Calendar.MONTH, month)
+        calendar.set(Calendar.DAY_OF_MONTH, day)
+
+        return calendar.getTime()
     }
 }
