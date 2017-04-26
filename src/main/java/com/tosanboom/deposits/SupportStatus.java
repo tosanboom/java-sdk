@@ -5,5 +5,6 @@ package com.tosanboom.deposits;
  */
 public enum SupportStatus {
     ACCOUNT,
-    DEPOSIT
+    DEPOSIT,
+    UNKNOWN
 }
