@@ -7,6 +7,11 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Common {
+    public static class NetBank {
+        public static final String USERNAME = "a7451";
+        public static final String PASSWORD = "84436377";
+    }
+
     public static class Card {
         public static final String PAN = "6393461031211747";
         public static final String PIN = "562970";
