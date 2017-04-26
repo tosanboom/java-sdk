@@ -56,4 +56,25 @@ public class Deposits {
 
         return Requests.sendRequest(httpRequest, DepositHolder.class);
     }
+
+    /**
+     * Return {@code iban_number} of the given {@code depositNumber}
+     *
+     * @param depositNumber The {@code depositNumber}
+     * @param boomApi Encapsulates the contextual information about the boom api
+     * @return {@code iban_number}
+     */
+    public static DepositIban getIban(String depositNumber, BoomApi boomApi) {
+        if (depositNumber == null || depositNumber.trim().isEmpty())
+            throw new IllegalArgumentException("DepositNumber must not be null or a blank string");
+
+        String url = boomApi.baseUrl() + "deposits/" + depositNumber + "/iban";
+        Request.Builder builder = new Request.Builder();
+        Request httpRequest = Requests.withCommonHeaders(builder, boomApi)
+                .url(url)
+                .get()
+                .build();
+
+        return Requests.sendRequest(httpRequest, DepositIban.class);
+    }
 }
