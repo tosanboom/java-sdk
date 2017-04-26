@@ -2,7 +2,7 @@ package com.tosanboom.cards
 
 import com.tosanboom.Bank
 import com.tosanboom.BoomApi
-import com.tosanboom.RequestFailedException
+import com.tosanboom.RestApiException
 import spock.lang.Specification
 
 class CardsHolderTest extends Specification {
@@ -39,10 +39,10 @@ class CardsHolderTest extends Specification {
             def request = new CardHolderRequest("675467578564646", "334534", "238", "9911", null)
 
         when:
-            def res = Cards.getHolder(request, boomApi)
+            Cards.getHolder(request, boomApi)
 
         then:
-            RequestFailedException ex = thrown()
+            RestApiException ex = thrown()
             ex.errorResponse.code == "037"
     }
 
@@ -59,10 +59,10 @@ class CardsHolderTest extends Specification {
             def request = new CardHolderRequest("6393461031212026", "11111", "238", "9911", null)
 
         when:
-            def res = Cards.getHolder(request, boomApi)
+            Cards.getHolder(request, boomApi)
 
         then:
-            RequestFailedException ex = thrown()
+            RestApiException ex = thrown()
             ex.errorResponse.code == ""
     }
 
@@ -79,10 +79,10 @@ class CardsHolderTest extends Specification {
             def request = new CardHolderRequest("6393461031212026", "334534", "111", "9911", null)
 
         when:
-            def res = Cards.getHolder(request, boomApi)
+            Cards.getHolder(request, boomApi)
 
         then:
-            RequestFailedException ex = thrown()
+            RestApiException ex = thrown()
             ex.errorResponse.code == ""
     }
 
@@ -99,10 +99,10 @@ class CardsHolderTest extends Specification {
             def request = new CardHolderRequest("6393461031212026", "334534", "238", "22", null)
 
         when:
-            def res = Cards.getHolder(request, boomApi)
+            Cards.getHolder(request, boomApi)
 
         then:
-            RequestFailedException ex = thrown()
+            RestApiException ex = thrown()
             ex.errorResponse.code == ""
     }
 }
