@@ -1,6 +1,7 @@
 package com.tosanboom.deposits;
 
 import com.tosanboom.BoomApi;
+import com.tosanboom.Json;
 import com.tosanboom.Requests;
 import okhttp3.Request;
 
@@ -55,5 +56,31 @@ public class Deposits {
                 .build();
 
         return Requests.sendRequest(httpRequest, DepositHolder.class);
+    }
+
+    /**
+     * Transfer an {@code amount} between {@code sourceDeposit} and {@code destinationDeposit}
+     * @param request Encapsulates required and some optional information to transfer between two deposits
+     * @param boomApi Encapsulates the contextual information about the boom api
+     * @return A {@code tracking_code} to trace the transaction of transferring
+     * @throws com.tosanboom.RestApiException When a 4xx/5xx error returns from REST API
+     * @throws com.tosanboom.FailedRequestException When we couldn't send the request for whatever reason
+     * @throws com.tosanboom.JsonException When something went wrong during JSON serialization/de-serialization
+     */
+    public static NormalTransfer normalTransfer(NormalTransferRequest request, BoomApi boomApi) {
+        if(request == null)
+            throw new IllegalArgumentException("Request parameter can not be null");
+
+        if(boomApi == null)
+            throw new IllegalArgumentException("BoomApi parameter can not be null");
+
+        String url = boomApi.baseUrl() + "deposits/transfer/normal";
+        Request.Builder builder = new Request.Builder();
+        Request httpRequest = Requests.withCommonHeaders(builder, boomApi)
+                .url(url)
+                .post(Json.of(request))
+                .build();
+
+        return Requests.sendRequest(httpRequest, NormalTransfer.class);
     }
 }
