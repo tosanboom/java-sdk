@@ -113,4 +113,28 @@ public class Cards {
 
         return Requests.sendRequest(request, CardTransactions.class);
     }
+
+    /**
+     * Calling the card transfer service that return information of transfer.
+     *
+     * @param request Encapsulates a card transfer request parameters such as the card credentials and destination info.
+     * @param boomApi Encapsulates common headers to be sent over the wire to the boom API.
+     * @return Information of transfer.
+     * @throws com.tosanboom.RestApiException When a 4xx/5xx error returns from REST API
+     * @throws com.tosanboom.FailedRequestException When we couldn't send the request for whatever reason
+     * @throws com.tosanboom.JsonException When something went wrong during JSON serialization/de-serialization
+     * @throws IllegalArgumentException When one of the required parameters were {@code null}
+     */
+    public static CardTransfer transfer(CardTransferRequest request, BoomApi boomApi) {
+        Asserts.notNull(request, "request can't be null");
+        Asserts.notNull(boomApi, "boomApi can't be null");
+
+        String url = boomApi.baseUrl() + "cards/transfer";
+        Request httpRequest = Requests.withCommonHeaders(new Request.Builder(), boomApi)
+                .url(url)
+                .post(Json.of(request))
+                .build();
+
+        return Requests.sendRequest(httpRequest, CardTransfer.class);
+    }
 }

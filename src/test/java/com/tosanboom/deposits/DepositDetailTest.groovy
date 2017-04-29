@@ -1,24 +1,19 @@
 package com.tosanboom.deposits
 
-import com.tosanboom.Bank
-import com.tosanboom.BoomApi
 import com.tosanboom.RestApiException
 import spock.lang.Specification
 
-class DepositDetailTest extends Specification{
+import static com.tosanboom.deposits.Deposits.getDetail
+import static commons.Common.Deposit.DEPOSIT_NUMBER
+import static commons.Common.TestBoomApi
+
+class DepositDetailTest extends Specification {
     def "With valid depositNumber get detail"() {
         given:
-            def boomApi = BoomApi.newBuilder()
-                    .withAppKey("12374")
-                    .withBoomToken("08d4032deeb68a719e52d38be8f869c4")
-                    .withDeviceId("123456789")
-                    .setSandbox(true)
-                    .withBank(Bank.ANSAR)
-                    .withSession("445d389a-f7fc-4759-9394-04403dd2125c")
-                    .build()
+            def boomApi = TestBoomApi.withTestSession()
 
         when:
-            def res = Deposits.getDetail("124-813-3335585-1", boomApi)
+            def res = getDetail(DEPOSIT_NUMBER , boomApi)
 
         then:
             res != null
@@ -26,17 +21,10 @@ class DepositDetailTest extends Specification{
 
     def "With invalid depositNumber get detail"() {
         given:
-            def boomApi = BoomApi.newBuilder()
-                    .withAppKey("12374")
-                    .withBoomToken("08d4032deeb68a719e52d38be8f869c4")
-                    .withDeviceId("123456789")
-                    .setSandbox(true)
-                    .withBank(Bank.ANSAR)
-                    .withSession("445d389a-f7fc-4759-9394-04403dd2125c")
-                    .build()
+            def boomApi = TestBoomApi.withTestSession()
 
         when:
-            Deposits.getDetail(depositNumber, boomApi)
+            getDetail(depositNumber, boomApi)
 
         then:
             thrown(RestApiException)

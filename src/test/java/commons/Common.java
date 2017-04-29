@@ -14,6 +14,10 @@ public class Common {
         public static final String PASSWORD = "84436377";
     }
 
+    public static class Deposit {
+        public static final String DEPOSIT_NUMBER = "124-4-750-2";
+    }
+
     public static class Card {
         public static final String PAN = "6393461031211747";
         public static final String PIN = "562970";

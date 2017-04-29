@@ -11,5 +11,6 @@ public enum DepositStatus {
     BLOCK,
     RESTING,
     OLD,
-    OPENING;
+    OPENING,
+    UNKNOWN
 }
