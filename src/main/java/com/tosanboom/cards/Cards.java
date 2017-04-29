@@ -32,8 +32,7 @@ public class Cards {
         Asserts.notNull(boomApi, "boomApi can't be a null value");
 
         String url = boomApi.baseUrl() + "cards/" + request.pan + "/balance";
-        Request.Builder builder = new Request.Builder();
-        Request httpRequest = Requests.withCommonHeaders(builder, boomApi)
+        Request httpRequest = Requests.withCommonHeaders(new Request.Builder(), boomApi)
                 .url(url)
                 .post(Json.of(request))
                 .build();
@@ -58,8 +57,7 @@ public class Cards {
         Asserts.notNull(boomApi, "boomApi can't be null");
 
         String url = boomApi.baseUrl() + "cards/" + request.pan + "/holder";
-        Request.Builder builder = new Request.Builder();
-        Request httpRequest = Requests.withCommonHeaders(builder, boomApi)
+        Request httpRequest = Requests.withCommonHeaders(new Request.Builder(), boomApi)
                 .url(url)
                 .post(Json.of(request))
                 .build();
@@ -73,11 +71,17 @@ public class Cards {
      * @param request Has some parameters to filter the received list, like pan number, length, offset, etc.
      * @param boomApi Encapsulated essential and optional headers for request to service
      * @return List of cards that each item of this list has some information about {@link CardList.Card}
+     * @throws com.tosanboom.RestApiException When a 4xx/5xx error returns from REST API
+     * @throws com.tosanboom.FailedRequestException When we couldn't send the request for whatever reason
+     * @throws com.tosanboom.JsonException When something went wrong during JSON serialization/de-serialization
+     * @throws IllegalArgumentException When the {@code boomApi} is {@code null}
      */
     public static CardList getCards(CardListRequest request, BoomApi boomApi) {
+        Asserts.notNull(boomApi, "boomApi can't be null");
+        if (request == null) request = CardListRequest.withoutFilter();
+
         String url = boomApi.baseUrl() + "cards/";
-        Request.Builder builder = new Request.Builder();
-        Request httpRequest = Requests.withCommonHeaders(builder, boomApi)
+        Request httpRequest = Requests.withCommonHeaders(new Request.Builder(), boomApi)
                 .url(url)
                 .post(Json.of(request))
                 .build();
@@ -102,8 +106,7 @@ public class Cards {
         Asserts.notNull(boomApi, "boomApi can't be null value");
 
         String url = String.format(boomApi.baseUrl() + "cards/%s/transactions", listTransactionsRequest.pan);
-        Request.Builder builder = new Request.Builder();
-        Request request = Requests.withCommonHeaders(builder, boomApi)
+        Request request = Requests.withCommonHeaders(new Request.Builder(), boomApi)
                 .url(url)
                 .post(Json.of(listTransactionsRequest))
                 .build();
