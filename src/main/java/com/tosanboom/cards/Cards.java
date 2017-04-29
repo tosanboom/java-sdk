@@ -25,6 +25,7 @@ public class Cards {
      * @throws com.tosanboom.RestApiException When a 4xx/5xx error returns from REST API
      * @throws com.tosanboom.FailedRequestException When we couldn't send the request for whatever reason
      * @throws com.tosanboom.JsonException When something went wrong during JSON serialization/de-serialization
+     * @throws IllegalArgumentException When one of the required parameters were {@code null}
      */
     public static CardBalance getBalance(CardBalanceRequest request, BoomApi boomApi) {
         Asserts.notNull(request, "request can't be a null value");
@@ -41,13 +42,21 @@ public class Cards {
     }
 
     /**
-     * Calling CardHolder service that return the owner name of card
+     * Returns personal information of a card identified by {@code pan} or {@code destinationPan}
      *
-     * @param request Encapsulated credential's information of card
-     * @param boomApi  Encapsulated header's parameters that must be send to request service, and default address url.
+     * @param request Encapsulates credential's information of card
+     * @param boomApi  Encapsulates header's parameters that must be send to request service,
+     *                 and default address url.
      * @return The response of calling service {@link CardHolder}
+     * @throws com.tosanboom.RestApiException When a 4xx/5xx error returns from REST API
+     * @throws com.tosanboom.FailedRequestException When we couldn't send the request for whatever reason
+     * @throws com.tosanboom.JsonException When something went wrong during JSON serialization/de-serialization
+     * @throws IllegalArgumentException When one of the required parameters were {@code null}
      */
     public static CardHolder getHolder(CardHolderRequest request, BoomApi boomApi) {
+        Asserts.notNull(request, "request can't be null");
+        Asserts.notNull(boomApi, "boomApi can't be null");
+
         String url = boomApi.baseUrl() + "cards/" + request.pan + "/holder";
         Request.Builder builder = new Request.Builder();
         Request httpRequest = Requests.withCommonHeaders(builder, boomApi)
@@ -86,6 +95,7 @@ public class Cards {
      * @throws com.tosanboom.RestApiException When a 4xx/5xx error returns from REST API
      * @throws com.tosanboom.FailedRequestException When we couldn't send the request for whatever reason
      * @throws com.tosanboom.JsonException When something went wrong during JSON serialization/de-serialization
+     * @throws IllegalArgumentException When one of the required parameters were {@code null}
      */
     public static CardTransactions listTransactions(ListTransactionsRequest listTransactionsRequest, BoomApi boomApi) {
         Asserts.notNull(listTransactionsRequest, "listTransactionsRequest can't be a null value");

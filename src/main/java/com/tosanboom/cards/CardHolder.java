@@ -1,28 +1,20 @@
 package com.tosanboom.cards;
 
 /**
- * This class has Returned parameters calling cardHolder service
+ * Encapsulates personal information of the card holder
  *
  * @author Marjan Mehranfar
  */
 public class CardHolder {
-     String firstName;
-     String lastName;
+    private String firstName;
+    private String lastName;
 
-    public String getFirstName() {
+    public String firstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
+    public String lastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     @Override
