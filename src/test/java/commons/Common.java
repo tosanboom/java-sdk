@@ -2,6 +2,8 @@ package commons;
 
 import com.tosanboom.Bank;
 import com.tosanboom.BoomApi;
+import com.tosanboom.accounts.Accounts;
+import com.tosanboom.accounts.BankLoginRequest;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -36,6 +38,17 @@ public class Common {
                           .build();
         }
 
+        public static BoomApi withTestSession() {
+            return BoomApi.newBuilder()
+                    .withBoomToken(Store.TOKEN)
+                    .withDeviceId(Store.DEVICE_ID)
+                    .withAppKey(Store.APP_KEY)
+                    .withBank(Bank.ANSAR)
+                    .setSandbox(true)
+                    .withSession(getSession())
+                    .build();
+        }
+
         public static Date date(int year, int month, int day) {
             Calendar calendar = Calendar.getInstance();
             calendar.set(Calendar.YEAR, year);
@@ -43,6 +56,12 @@ public class Common {
             calendar.set(Calendar.DAY_OF_MONTH, day);
 
             return calendar.getTime();
+        }
+
+        private static String getSession() {
+            BankLoginRequest request = new BankLoginRequest(NetBank.USERNAME, NetBank.PASSWORD);
+
+            return Accounts.bankLogin(request, TestBoomApi.forCardService()).sessionId();
         }
     }
 }

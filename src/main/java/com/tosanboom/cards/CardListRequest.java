@@ -28,11 +28,8 @@ public class CardListRequest {
     final Long offset;
     final Long length;
 
-    private CardListRequest(String pan, String depositNumber, CardStatus cardStatus,
-                           Long offset, Long length) {
-        /**
-         * Check validation of essential parameters
-         */
+    private CardListRequest(String pan, String depositNumber, CardStatus cardStatus, Long offset, Long length) {
+
         panNotEmpty(pan);
         depositNotEmpty(depositNumber);
         offsetNotNegative(offset);
@@ -46,8 +43,8 @@ public class CardListRequest {
     }
 
     /**
-     * Since that the user can receive list of cards without sending any parameters to filtering it,
-     * In this method build an object of class
+     * If you don't want to filter the list of possible cards by various options, use this factory
+     * method to create a filter-less request.
      *
      * @return An instance of {@link CardListRequest} class
      */
@@ -56,7 +53,8 @@ public class CardListRequest {
     }
 
     /**
-     * If the user want to get list of cards without filtering and call newBuilder method, can use it
+     * A nexus to the {@linkplain Builder} which allows you to define different options to filter
+     * the possible list of cards
      *
      * @return An instance of {@link CardListRequest} class
      */
@@ -74,26 +72,57 @@ public class CardListRequest {
         private Long offset;
         private Long length;
 
+        /**
+         * If given, the returned list will only contains card(s) with the given card number
+         *
+         * @param pan The card or PAN number
+         * @return The builder itself
+         */
         public Builder withPan(String pan) {
             this.pan = pan;
             return this;
         }
 
+        /**
+         * If given, the returned card list will contains all cards associated with the given
+         * {@code depositNumber}
+         *
+         * @param depositNumber The deposit number to filter cards
+         * @return The builder itself
+         */
         public Builder withDepositNumber(String depositNumber) {
             this.depositNumber = depositNumber;
             return this;
         }
 
+        /**
+         * If given, the returned card list will contains cards which are in the given {@code cardStatus}
+         *
+         * @param cardStatus State of the card
+         * @return The builder itself
+         */
         public Builder withCardStatus(CardStatus cardStatus) {
             this.cardStatus = cardStatus;
             return this;
         }
 
+        /**
+         * Set offset for pagination
+         *
+         * @param offset The non-negative offset value
+         * @return The builder itself
+         */
         public Builder withOffset(Long offset) {
             this.offset = offset;
             return this;
         }
 
+        /**
+         * Set the size of each page, defaults to 1. This value should be a positive number.
+         *
+         * @param length The length or size of each page
+         * @return The builder itself
+         */
         public Builder withLength(Long length) {
             this.length = length;
             return this;
@@ -105,7 +134,6 @@ public class CardListRequest {
         public CardListRequest build() {
             return new CardListRequest(pan, depositNumber, cardStatus, offset, length);
         }
-
     }
 
     /**

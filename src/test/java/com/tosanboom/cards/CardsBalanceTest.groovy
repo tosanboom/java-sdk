@@ -29,9 +29,9 @@ class CardsBalanceTest extends Specification {
             def res = Cards.getBalance(request, boomApi)
 
         then:
-            res.availableBalance != null
-            res.currency != null
-            res.ledgerBalance != null
+            res.availableBalance() != null
+            res.currency() != null
+            res.ledgerBalance() != null
     }
 
     def "With invalid credentials, Cards.getBalance should return a 4xx client error"() {
