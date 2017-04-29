@@ -8,9 +8,21 @@ import java.math.BigDecimal;
  * @author Ali Dehghani
  */
 public class CardBalance {
-    public BigDecimal availableBalance;
-    public BigDecimal ledgerBalance;
-    public String currency;
+    private BigDecimal availableBalance;
+    private BigDecimal ledgerBalance;
+    private String currency;
+
+    public BigDecimal availableBalance() {
+        return availableBalance;
+    }
+
+    public BigDecimal ledgerBalance() {
+        return ledgerBalance;
+    }
+
+    public String currency() {
+        return currency;
+    }
 
     @Override
     public String toString() {
