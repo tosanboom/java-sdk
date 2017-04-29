@@ -31,7 +31,7 @@ class BankLoginTest extends Specification {
 
         then:
             res != null
-            res.sessionId != null
+            res.sessionId() != null
     }
 
     def "With invalid credentials, bank login should fail with a 4xx error"() {
