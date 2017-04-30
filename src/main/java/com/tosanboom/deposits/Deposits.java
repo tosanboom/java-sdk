@@ -1,8 +1,10 @@
 package com.tosanboom.deposits;
 
+import com.tosanboom.Asserts;
 import com.tosanboom.BoomApi;
 import com.tosanboom.Requests;
 import okhttp3.Request;
+import com.tosanboom.Json;
 
 /**
  * Entry point for calling all deposit related services. Usually each method's first
@@ -55,5 +57,30 @@ public class Deposits {
                 .build();
 
         return Requests.sendRequest(httpRequest, DepositHolder.class);
+    }
+
+    /**
+     * List statements of a deposit
+     *
+     * @param request Encapsulates the filtering parameters to get statements of the given deposit number
+     * @param boomApi Encapsulates the contextual information about the boom api
+     * @return List of {@linkplain com.tosanboom.deposits.StatementList.Statement} of the given
+     *         deposit number
+     * @throws com.tosanboom.RestApiException When a 4xx/5xx error returns from REST API
+     * @throws com.tosanboom.FailedRequestException When we couldn't send the request for whatever reason
+     * @throws com.tosanboom.JsonException When something went wrong during JSON serialization/de-serialization
+     * @throws IllegalArgumentException When some of the required parameters were null
+     */
+    public static StatementList getStatements(StatementListRequest request, BoomApi boomApi) {
+        Asserts.notNull(request, "The request parameter can not be null");
+        Asserts.notNull(boomApi, "The boomApi parameter can not be null");
+
+        String url = boomApi.baseUrl() + "deposits/" + request.depositNumber + "/statements";
+        Request httpRequest = Requests.withCommonHeaders(new Request.Builder(), boomApi)
+                .url(url)
+                .post(Json.of(request))
+                .build();
+
+        return Requests.sendRequest(httpRequest, StatementList.class);
     }
 }
