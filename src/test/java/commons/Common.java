@@ -10,18 +10,18 @@ import java.util.Date;
 
 public class Common {
     public static class NetBank {
-        public static final String USERNAME = "a7451";
-        public static final String PASSWORD = "84436377";
+        public static final String USERNAME = "cif3211";
+        public static final String PASSWORD = "62589654";
     }
 
     public static class Deposit {
-        public static final String DEPOSIT_NUMBER = "124-4-750-2";
+        public static final String DEPOSIT_NUMBER = "110-70-1000000-1";
     }
 
     public static class Card {
-        public static final String PAN = "6393461031211747";
-        public static final String PIN = "562970";
-        public static final String CVV = "592";
+        public static final String PAN = "6393461031211713";
+        public static final String PIN = "831483";
+        public static final String CVV = "917";
         public static final String EXP = "9911";
     }
 

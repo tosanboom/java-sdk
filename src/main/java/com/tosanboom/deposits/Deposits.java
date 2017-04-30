@@ -56,4 +56,28 @@ public class Deposits {
 
         return Requests.sendRequest(httpRequest, DepositHolder.class);
     }
+
+    /**
+     * This service disable auto transfer for the given {@code serial}
+     *
+     * @param serial The serial that was given of autoTransfer service
+     * @param boomApi Encapsulates the contextual information about the boom api
+     * @return An instance of {@linkplain CancelAutoTransfer} ,It has the number of transactions that disabled
+     * @throws com.tosanboom.RestApiException When a 4xx/5xx error returns from REST API
+     * @throws com.tosanboom.FailedRequestException When we couldn't send the request for whatever reason
+     * @throws com.tosanboom.JsonException When something went wrong during JSON serialization/de-serialization
+     */
+    public static CancelAutoTransfer cancelAutoTransfer(String serial, BoomApi boomApi) {
+        if(serial == null || serial.trim().isEmpty())
+            throw new IllegalArgumentException("Serial parameter can not be null or a blank string");
+
+        String url = boomApi.baseUrl() + "deposits/transfer/auto/" + serial;
+        Request.Builder builder = new Request.Builder();
+        Request httpRequest = Requests.withCommonHeaders(builder, boomApi)
+                .url(url)
+                .delete()
+                .build();
+
+        return Requests.sendRequest(httpRequest, CancelAutoTransfer.class);
+    }
 }
