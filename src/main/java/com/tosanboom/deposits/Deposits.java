@@ -1,6 +1,7 @@
 package com.tosanboom.deposits;
 
 import com.tosanboom.BoomApi;
+import com.tosanboom.Json;
 import com.tosanboom.Requests;
 import okhttp3.Request;
 
@@ -55,5 +56,32 @@ public class Deposits {
                 .build();
 
         return Requests.sendRequest(httpRequest, DepositHolder.class);
+    }
+
+    /**
+     * Auto transfer in the given terms and counts
+     *
+     * @param request Encapsulates the information to do auto transfer
+     * @param boomApi Encapsulates the contextual information about the boom api
+     * @return A trackingNumber to trace the auto transfer
+     * @throws com.tosanboom.RestApiException When a 4xx/5xx error returns from REST API
+     * @throws com.tosanboom.FailedRequestException When we couldn't send the request for whatever reason
+     * @throws com.tosanboom.JsonException When something went wrong during JSON serialization/de-serialization
+     */
+    public static AutoTransfer autoTransfer(AutoTransferRequest request, BoomApi boomApi) {
+        if(request == null)
+            throw new IllegalArgumentException("The request parameter can not be null");
+
+        if(boomApi == null)
+            throw new IllegalArgumentException("The boomApi can not be null");
+
+        String url = boomApi.baseUrl() + "deposits/transfer/auto";
+        Request.Builder builder = new Request.Builder();
+        Request httpRequest = Requests.withCommonHeaders(builder, boomApi)
+                .url(url)
+                .post(Json.of(request))
+                .build();
+
+        return Requests.sendRequest(httpRequest, AutoTransfer.class);
     }
 }
