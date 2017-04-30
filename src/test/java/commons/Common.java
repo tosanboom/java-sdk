@@ -31,15 +31,20 @@ public class Common {
         public static final String APP_KEY = "12374";
     }
 
+    public static class Bill {
+        public static final String BILL_ID = "2519128609051";
+        public static final String PAY_ID = "48062127";
+    }
+
     public static class TestBoomApi {
         public static BoomApi forCardService() {
             return BoomApi.newBuilder()
-                          .withBoomToken(Store.TOKEN)
-                          .withDeviceId(Store.DEVICE_ID)
-                          .withAppKey(Store.APP_KEY)
-                          .withBank(Bank.ANSAR)
-                          .setSandbox(true)
-                          .build();
+                    .withBoomToken(Store.TOKEN)
+                    .withDeviceId(Store.DEVICE_ID)
+                    .withAppKey(Store.APP_KEY)
+                    .withBank(Bank.ANSAR)
+                    .setSandbox(true)
+                    .build();
         }
 
         public static BoomApi withTestSession() {
