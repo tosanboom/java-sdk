@@ -25,6 +25,11 @@ public class Common {
         public static final String EXP = "9911";
     }
 
+    public static class Bill {
+        public static final String BILL_ID = "2519128609051";
+        public static final String PAY_ID = "48062127";
+    }
+
     public static class Store {
         public static final String DEVICE_ID = "123456789";
         public static final String TOKEN = "08d4032deeb68a719e52d38be8f869c4";
