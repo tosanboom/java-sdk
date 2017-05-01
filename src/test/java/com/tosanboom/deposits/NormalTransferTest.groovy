@@ -27,7 +27,7 @@ class NormalTransferTest extends Specification {
             def res = Deposits.normalTransfer(request, boomApi)
 
         then:
-            res.trackingCode != null
+            res.trackingCode() != null
 
         where:
             sourceDeposit       |destinationDeposit   |amount

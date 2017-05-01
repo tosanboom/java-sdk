@@ -59,13 +59,15 @@ public class Deposits {
     }
 
     /**
-     * Transfer an {@code amount} between {@code sourceDeposit} and {@code destinationDeposit}
+     * Transfer given amount of money between two deposits in the same bank, i.e. Deposit Normal Transfer
+     *
      * @param request Encapsulates required and some optional information to transfer between two deposits
      * @param boomApi Encapsulates the contextual information about the boom api
-     * @return A {@code tracking_code} to trace the transaction of transferring
+     * @return Represents state of a successful normal transfer
      * @throws com.tosanboom.RestApiException When a 4xx/5xx error returns from REST API
      * @throws com.tosanboom.FailedRequestException When we couldn't send the request for whatever reason
      * @throws com.tosanboom.JsonException When something went wrong during JSON serialization/de-serialization
+     * @throws IllegalArgumentException If the given parameters were null
      */
     public static NormalTransfer normalTransfer(NormalTransferRequest request, BoomApi boomApi) {
         if(request == null)
@@ -75,8 +77,7 @@ public class Deposits {
             throw new IllegalArgumentException("BoomApi parameter can not be null");
 
         String url = boomApi.baseUrl() + "deposits/transfer/normal";
-        Request.Builder builder = new Request.Builder();
-        Request httpRequest = Requests.withCommonHeaders(builder, boomApi)
+        Request httpRequest = Requests.withCommonHeaders(new Request.Builder(), boomApi)
                 .url(url)
                 .post(Json.of(request))
                 .build();

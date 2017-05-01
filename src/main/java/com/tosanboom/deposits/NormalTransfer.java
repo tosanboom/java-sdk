@@ -4,7 +4,14 @@ package com.tosanboom.deposits;
  * @author Marjan Mehranfar
  */
 public class NormalTransfer {
-    public String trackingCode;
+    private String trackingCode;
+
+    /**
+     * The tracking code to trace the transaction
+     */
+    public String trackingCode() {
+        return trackingCode;
+    }
 
     @Override
     public String toString() {
