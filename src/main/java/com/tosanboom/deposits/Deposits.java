@@ -83,4 +83,28 @@ public class Deposits {
 
         return Requests.sendRequest(httpRequest, StatementList.class);
     }
+
+    /**
+     * Receive list of deposits for current authenticated user
+     *
+     * @param request {@linkplain DepositListRequest} encapsulates parameters to filter the deposit list
+     * @param boomApi Encapsulates the contextual information about the boom api
+     * @return An instance of {@linkplain DepositList} , It has list of {@linkplain Deposit}
+     * @throws com.tosanboom.RestApiException When a 4xx/5xx error returns from REST API
+     * @throws com.tosanboom.FailedRequestException When we couldn't send the request for whatever reason
+     * @throws com.tosanboom.JsonException When something went wrong during JSON serialization/de-serialization
+     * @throws IllegalArgumentException If request parameters were null
+     */
+    public static DepositList getDeposits(DepositListRequest request, BoomApi boomApi) {
+        if (request == null) request = DepositListRequest.withoutFilter();
+        Asserts.notNull(boomApi, "BoomApi can not be null");
+
+        String url = boomApi.baseUrl() + "deposits";
+        Request httpRequest = Requests.withCommonHeaders(new Request.Builder(), boomApi)
+                .url(url)
+                .post(Json.of(request))
+                .build();
+
+        return Requests.sendRequest(httpRequest, DepositList.class);
+    }
 }
