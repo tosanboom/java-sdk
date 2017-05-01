@@ -7,7 +7,14 @@ import java.util.List;
  * @author Marjan Mehranfar
  */
 public class DepositList {
-    public List<Deposit> deposits = new ArrayList<>();
+    private List<Deposit> deposits = new ArrayList<>();
+
+    /**
+     * @return List of {@linkplain Deposit}s
+     */
+    public List<Deposit> deposits() {
+        return deposits;
+    }
 
     @Override
     public String toString() {

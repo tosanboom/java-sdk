@@ -22,7 +22,7 @@ class DepositListTest extends Specification {
             def res = Deposits.getDeposits(request, boomApi)
 
         then:
-            res.deposits != null
+            res.deposits() != null
     }
 
     def "With sending valid parameters, get list of deposit"() {
@@ -49,7 +49,7 @@ class DepositListTest extends Specification {
             def res = Deposits.getDeposits(request, boomApi)
 
         then:
-            res.deposits != null
+            res.deposits() != null
 
         where:
             depositNumbers           |depositStatus      |creditAccounts |supportAccounts |offset |length

@@ -27,13 +27,13 @@ import java.util.List;
 public class DepositListRequest {
     final List<String> depositNumbers;
     final DepositStatus depositStatus;
-    final Boolean includeSupportAccount;
-    final Boolean includeCreditAccount;
+    final boolean includeSupportAccount;
+    final boolean includeCreditAccount;
     final Long offset;
     final Long length;
 
-    private DepositListRequest(List<String> depositNumbers, DepositStatus depositStatus, Boolean includeSupportAccount,
-                              Boolean includeCreditAccount, Long offset, Long length) {
+    private DepositListRequest(List<String> depositNumbers, DepositStatus depositStatus, boolean includeSupportAccount,
+                              boolean includeCreditAccount, Long offset, Long length) {
         offsetNotNegative(offset);
         lengthNotNegative(length);
 
@@ -66,36 +66,67 @@ public class DepositListRequest {
     public static class Builder {
         private List<String> depositNumbers;
         private DepositStatus depositStatus;
-        private Boolean includeSupportAccount;
-        private Boolean includeCreditAccount;
+        private boolean includeSupportAccount;
+        private boolean includeCreditAccount;
         private Long offset;
         private Long length;
 
+        /**
+         * (Optional) Filtering based on list of deposit numbers
+         *
+         * @param depositNumbers The list of deposit numbers
+         */
         public Builder withDepositNumbers(List<String> depositNumbers) {
             this.depositNumbers = depositNumbers;
             return this;
         }
 
+        /**
+         * (Optional) Filtering based on status of deposit,
+         *            To check the status of a deposit you can refer to {@linkplain DepositStatus}
+         *
+         * @param depositStatus The status of deposit
+         */
         public Builder withDepositStatus(DepositStatus depositStatus) {
             this.depositStatus = depositStatus;
             return this;
         }
 
+        /**
+         * (Optional)
+         *
+         * @param includeSupportAccount
+         */
         public Builder withIncludeSupportAccount(Boolean includeSupportAccount) {
             this.includeSupportAccount = includeSupportAccount;
             return this;
         }
 
+        /**
+         * (Optional)
+         *
+         * @param includeCreditAccount
+         */
         public Builder withIncludeCreditAccount(Boolean includeCreditAccount) {
             this.includeCreditAccount = includeCreditAccount;
             return this;
         }
 
+        /**
+         * (Optional) How many items to skip before the first element of the current page.
+         *
+         * @param offset The offset
+         */
         public Builder withOffset(Long offset) {
             this.offset = offset;
             return this;
         }
 
+        /**
+         * (Optional) Determine the size of list that expect to received
+         *
+         * @param length The size of page
+         */
         public Builder withLength(Long length) {
             this.length = length;
             return this;
@@ -119,7 +150,7 @@ public class DepositListRequest {
      */
     private void offsetNotNegative(Long offset) {
         if(offset != null && offset < 0)
-            throw new IllegalArgumentException("Offset can't be a negative number");
+            throw new IllegalArgumentException("offset can't be a negative number");
     }
 
     /**
@@ -131,6 +162,6 @@ public class DepositListRequest {
      */
     private void lengthNotNegative(Long length) {
         if(length != null && length <= 0)
-            throw new IllegalArgumentException("Length can't be less than or equal to zero");
+            throw new IllegalArgumentException("length can't be less than or equal to zero");
     }
 }
