@@ -66,7 +66,7 @@ public class Deposits {
      *  @throws com.tosanboom.RestApiException When a 4xx/5xx error returns from REST API
      * @throws com.tosanboom.FailedRequestException When we couldn't send the request for whatever reason
      * @throws com.tosanboom.JsonException When something went wrong during JSON serialization/de-serialization
-     * @throws IllegalArgumentException If {@code depositNumber} were null or a blank string
+     * @throws IllegalArgumentException If the given parameters were null or a blank string
      */
     public static DepositIban getIban(String depositNumber, BoomApi boomApi) {
         if (depositNumber == null || depositNumber.trim().isEmpty())
