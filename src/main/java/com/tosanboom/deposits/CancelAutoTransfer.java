@@ -6,6 +6,9 @@ package com.tosanboom.deposits;
 public class CancelAutoTransfer {
     private short disableTransferNumber;
 
+    /**
+     * Represents the number of auto transfer have been disabled.
+     */
     public short disableTransferNumber() {
         return disableTransferNumber;
     }
