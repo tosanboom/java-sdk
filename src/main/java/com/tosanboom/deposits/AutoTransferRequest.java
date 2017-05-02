@@ -57,41 +57,81 @@ public class AutoTransferRequest {
         private short transactionCount;
         private long tryCountDay;
 
+        /**
+         * The amount to transfer
+         *
+         * @param amount The amount
+         */
         public Builder withAmount(BigDecimal amount) {
             this.amount = amount;
             return this;
         }
 
+        /**
+         * The destination deposit number will give an amount
+         *
+         * @param destinationDepositNumber The deposit number of destination
+         */
         public Builder withDestinationDepositNumber(String destinationDepositNumber) {
             this.destinationDepositNumber = destinationDepositNumber;
             return this;
         }
 
+        /**
+         * The source deposit number will transfer an amount to {@linkplain #destinationDepositNumber}
+         *
+         * @param sourceDepositNumber The deposit number of source
+         */
         public Builder withSourceDepositNumber(String sourceDepositNumber) {
             this.sourceDepositNumber = sourceDepositNumber;
             return this;
         }
 
+        /**
+         * The date determines when auto transfer will start.
+         *
+         * @param startDate The date to start auto transfer
+         */
         public Builder withStartDate(Date startDate) {
             this.startDate = startDate;
             return this;
         }
 
+        /**
+         * {@code termLength} determines count of do auto transfer
+         *
+         * @param termLength The count of auto transfer
+         */
         public Builder withTermLength(short termLength) {
             this.termLength = termLength;
             return this;
         }
 
+        /**
+         * It determines the term of auto transfer
+         *
+         * @param termType the term
+         */
         public Builder withTermType(Term termType) {
             this.termType = termType;
             return this;
         }
 
+        /**
+         * It determines the count of transaction.
+         *
+         * @param transactionCount The count
+         */
         public Builder withTransactionCount(short transactionCount) {
             this.transactionCount = transactionCount;
             return this;
         }
 
+        /**
+         * If auto transfer failed, {@code tryCountDay} determines the count of days try to auto transfer.
+         *
+         * @param tryCountDay he count of days
+         */
         public Builder withTryCountDay(long tryCountDay) {
             this.tryCountDay = tryCountDay;
             return this;

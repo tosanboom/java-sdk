@@ -6,6 +6,9 @@ package com.tosanboom.deposits;
 public class AutoTransfer {
     private String trackingNumber;
 
+    /**
+     * The tracking number to trace an auto transfer
+     */
     public String trackingNumber() {
         return trackingNumber;
     }
