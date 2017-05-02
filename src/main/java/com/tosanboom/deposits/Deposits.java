@@ -179,4 +179,28 @@ public class Deposits {
 
         return Requests.sendRequest(httpRequest, AutoTransfer.class);
     }
+
+    /**
+     * Disables auto transfer for the given {@code serial}
+     *
+     * @param serial The identifier (serial) for a previously submitted periodic (auto) transfer
+     * @param boomApi Encapsulates the contextual information about the boom api
+     * @return An instance of {@linkplain CancelAutoTransfer}, It has the number of transactions that disabled
+     * @throws com.tosanboom.RestApiException When a 4xx/5xx error returns from REST API
+     * @throws com.tosanboom.FailedRequestException When we couldn't send the request for whatever reason
+     * @throws com.tosanboom.JsonException When something went wrong during JSON serialization/de-serialization
+     * @throws IllegalArgumentException If the given parameters were null or a blank string
+     */
+    public static CancelAutoTransfer cancelAutoTransfer(String serial, BoomApi boomApi) {
+        Asserts.notBlank(serial, "Serial parameter can not be null or a blank string");
+        Asserts.notNull(boomApi, "BoomApi can't be null");
+
+        String url = boomApi.baseUrl() + "deposits/transfer/auto/" + serial;
+        Request httpRequest = Requests.withCommonHeaders(new Request.Builder(), boomApi)
+                .url(url)
+                .delete()
+                .build();
+
+        return Requests.sendRequest(httpRequest, CancelAutoTransfer.class);
+    }
 }
