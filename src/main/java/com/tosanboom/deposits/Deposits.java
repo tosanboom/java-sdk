@@ -203,4 +203,28 @@ public class Deposits {
 
         return Requests.sendRequest(httpRequest, CancelAutoTransfer.class);
     }
+
+    /**
+     * Get reports of auto transfer
+     *
+     * @param request Encapsulates some parameters to filtering returned list
+     * @param boomApi Encapsulates the contextual information about the boom api
+     * @return List of reports from auto transfer
+     * @throws com.tosanboom.RestApiException When a 4xx/5xx error returns from REST API
+     * @throws com.tosanboom.FailedRequestException When we couldn't send the request for whatever reason
+     * @throws com.tosanboom.JsonException When something went wrong during JSON serialization/de-serialization
+     * @throws IllegalArgumentException When one of parameters were null
+     */
+    public static AutoTransferReport getAutoTransferReports(ReportAutoTransferRequest request, BoomApi boomApi) {
+        Asserts.notNull(request, "Request can't be null");
+        Asserts.notNull(boomApi, "BoomApi can't be null");
+
+        String url = boomApi.baseUrl() + "deposits/transfer/auto/reports";
+        Request httpRequest = Requests.withCommonHeaders(new Request.Builder(), boomApi)
+                .url(url)
+                .post(Json.of(request))
+                .build();
+
+        return Requests.sendRequest(httpRequest, AutoTransferReport.class);
+    }
 }
