@@ -7,7 +7,7 @@ import com.tosanboom.Requests;
 import okhttp3.Request;
 
 /**
- * Entry point for all auth related services
+ * Entry point for all auth and account related services
  *
  * @author Ali Dehghani
  */
@@ -34,5 +34,27 @@ public class Accounts {
                 .build();
 
         return Requests.sendRequest(request, BankLoginResponse.class);
+    }
+
+    /**
+     * Retrieves personal information of the account owner
+     *
+     * @param request Encapsulates filtering options available for this service
+     * @param boomApi Encapsulates contextual information about the boom API
+     * @return An instance of {@linkplain AccountInfo} representing personal information of the
+     *         account owner
+     * @throws com.tosanboom.RestApiException If REST API return a 4xx/5xx error
+     * @throws com.tosanboom.FailedRequestException When we couldn't manage to send the request
+     * @throws com.tosanboom.JsonException If we couldn't read/write the JSON to/from a pojo
+     * @throws IllegalArgumentException If either of required parameters were {@code null}
+     */
+    public static AccountInfo getInfo(AccountInfoRequest request, BoomApi boomApi) {
+        Asserts.notNull(boomApi, "boomApi can't be null");
+        if (request == null) request = AccountInfoRequest.withoutAddress();
+
+        String url = boomApi.baseUrl() + "/accounts" + request.toQueryParam();
+        Request httpRequest = Requests.withCommonHeaders(new Request.Builder(), boomApi).url(url).build();
+
+        return Requests.sendRequest(httpRequest, AccountInfo.class);
     }
 }
