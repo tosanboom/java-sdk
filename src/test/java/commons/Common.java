@@ -12,10 +12,14 @@ public class Common {
     public static class NetBank {
         public static final String USERNAME = "a7451";
         public static final String PASSWORD = "84436377";
+
+        public static final String USERNAME_WITHDRAW = "cif3211";
+        public static final String PASSWORD_WITHDRAW = "62589654";
     }
 
     public static class Deposit {
         public static final String DEPOSIT_NUMBER = "124-4-750-2";
+        public static final String DEPOSIT_NUMBER_WITHDRAW = "110-70-1000000-1";
     }
 
     public static class Card {
@@ -49,7 +53,18 @@ public class Common {
                     .withAppKey(Store.APP_KEY)
                     .withBank(Bank.ANSAR)
                     .setSandbox(true)
-                    .withSession(getSession())
+                    .withSession(getSession(NetBank.USERNAME, NetBank.PASSWORD))
+                    .build();
+        }
+
+        public static BoomApi withdrawTestSession() {
+            return BoomApi.newBuilder()
+                    .withBoomToken(Store.TOKEN)
+                    .withDeviceId(Store.DEVICE_ID)
+                    .withAppKey(Store.APP_KEY)
+                    .withBank(Bank.ANSAR)
+                    .setSandbox(true)
+                    .withSession(getSession(NetBank.USERNAME_WITHDRAW, NetBank.PASSWORD_WITHDRAW))
                     .build();
         }
 
@@ -62,8 +77,8 @@ public class Common {
             return calendar.getTime();
         }
 
-        private static String getSession() {
-            BankLoginRequest request = new BankLoginRequest(NetBank.USERNAME, NetBank.PASSWORD);
+        private static String getSession(String username, String password) {
+            BankLoginRequest request = new BankLoginRequest(username, password);
 
             return Accounts.bankLogin(request, TestBoomApi.forCardService()).sessionId();
         }
