@@ -27,7 +27,7 @@ class GetIbanTest extends Specification {
             def res = Deposits.getIban(depositNumber, boomApi)
 
         then:
-            res.ibanNumber != null
+            res.ibanNumber() != null
     }
 
         def "Get iban of the invalid given depositNumber"() {
