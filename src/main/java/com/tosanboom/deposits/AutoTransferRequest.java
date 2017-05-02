@@ -1,5 +1,7 @@
 package com.tosanboom.deposits;
 
+import com.tosanboom.Asserts;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -68,7 +70,7 @@ public class AutoTransferRequest {
         }
 
         /**
-         * The destination deposit number will give an amount
+         * The destination deposit number that receive the amount
          *
          * @param destinationDepositNumber The deposit number of destination
          */
@@ -140,6 +142,7 @@ public class AutoTransferRequest {
         /**
          * @return An instance of {@linkplain AutoTransferRequest}, It throws an {@linkplain IllegalArgumentException}
          * if one of the given parameters were not valid
+         * @throws IllegalArgumentException If given parameters were missing or invalid
          */
         public AutoTransferRequest build() {
             return new AutoTransferRequest(amount, destinationDepositNumber,
@@ -149,34 +152,29 @@ public class AutoTransferRequest {
     }
 
     private void amountNotZeroOrNegative(BigDecimal amount) {
-        if(amount == null || amount.signum() <= 0)
+        if (amount == null || amount.signum() <= 0)
             throw new IllegalArgumentException("Amount can not be null or negative");
     }
 
     private void destinationDepositNotNullOrEmpty(String destinationDepositNumber) {
-        if(destinationDepositNumber == null || destinationDepositNumber.trim().isEmpty())
-            throw new IllegalArgumentException("DestinationDepositNumber can not be null or a blank string");
+        Asserts.notBlank(destinationDepositNumber, "DestinationDepositNumber can not be null or a blank string");
     }
 
     private void sourceDepositNotNullOrEmpty(String sourceDepositNumber) {
-        if(sourceDepositNumber == null || sourceDepositNumber.trim().isEmpty()) {
-            throw new IllegalArgumentException("SourceDepositNumber can not be null or a blank string");
-        }
+        Asserts.notBlank(sourceDepositNumber, "SourceDepositNumber can not be null or a blank string");
     }
 
     private void startDateNotNull(Date startDate) {
-        if(startDate ==null)
-            throw new IllegalArgumentException("StartDate can not be null");
+        Asserts.notNull(startDate, "StartDate can not be null");
     }
 
     private void transactionCountNotZero(short transactionCount) {
-        if(transactionCount <= 0)
+        if (transactionCount <= 0)
             throw new IllegalArgumentException("transactionCount can not be zero or a negative value");
     }
 
     private void termTypeNotNull(Term termType) {
-        if(termType == null)
-            throw new IllegalArgumentException("TermType can not be a null value");
+        Asserts.notNull(termType, "TermType can not be a null value");
     }
 
     private void termLengthNotZero(short termLength) {
