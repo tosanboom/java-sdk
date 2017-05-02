@@ -107,4 +107,28 @@ public class Deposits {
 
         return Requests.sendRequest(httpRequest, DepositList.class);
     }
+
+    /**
+     * Return IBAN number of the given {@code depositNumber}
+     *
+     * @param depositNumber The deposit number
+     * @param boomApi Encapsulates the contextual information about the boom api
+     * @return The corresponding IBAN number
+     * @throws com.tosanboom.RestApiException When a 4xx/5xx error returns from REST API
+     * @throws com.tosanboom.FailedRequestException When we couldn't send the request for whatever reason
+     * @throws com.tosanboom.JsonException When something went wrong during JSON serialization/de-serialization
+     * @throws IllegalArgumentException If the given parameters were null or a blank string
+     */
+    public static DepositIban getIban(String depositNumber, BoomApi boomApi) {
+        Asserts.notBlank(depositNumber, "DepositNumber must not be null or a blank string");
+        Asserts.notNull(boomApi, "boomApi can't be null");
+
+        String url = boomApi.baseUrl() + "deposits/" + depositNumber + "/iban";
+        Request httpRequest = Requests.withCommonHeaders(new Request.Builder(), boomApi)
+                .url(url)
+                .get()
+                .build();
+
+        return Requests.sendRequest(httpRequest, DepositIban.class);
+    }
 }
