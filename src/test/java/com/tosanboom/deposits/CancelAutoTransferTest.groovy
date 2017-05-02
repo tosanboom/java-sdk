@@ -22,9 +22,9 @@ class CancelAutoTransferTest extends Specification {
             def boomApi = Common.TestBoomApi.withTestSession()
 
         when:
-            def res = cancelAutoTransfer("646", boomApi)
+            cancelAutoTransfer("646", boomApi)
 
         then:
-            def e = thrown(RestApiException)
+            thrown(RestApiException)
     }
 }

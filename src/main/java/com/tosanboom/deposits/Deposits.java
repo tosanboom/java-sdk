@@ -66,6 +66,7 @@ public class Deposits {
      * @throws com.tosanboom.RestApiException When a 4xx/5xx error returns from REST API
      * @throws com.tosanboom.FailedRequestException When we couldn't send the request for whatever reason
      * @throws com.tosanboom.JsonException When something went wrong during JSON serialization/de-serialization
+     * @throws IllegalArgumentException If the given parameters were null or a blank string
      */
     public static CancelAutoTransfer cancelAutoTransfer(String serial, BoomApi boomApi) {
         if(serial == null || serial.trim().isEmpty())
