@@ -36,6 +36,10 @@ public class Common {
         public static final String APP_KEY = "12374";
     }
 
+    public static class Loan {
+        public static final String LOAN_NUMBER = "124.120.7451.1";
+    }
+
     public static class TestBoomApi {
         public static BoomApi forCardService() {
             return BoomApi.newBuilder()
