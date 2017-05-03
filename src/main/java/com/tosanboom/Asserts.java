@@ -1,5 +1,7 @@
 package com.tosanboom;
 
+import java.util.Collection;
+
 /**
  * Utilities containing the common assertions we will use to make sure that
  * all service pre-conditions are met before actually calling the backend services.
@@ -35,5 +37,11 @@ public class Asserts {
     public static void notNull(Object value, String message) {
         if (value == null)
             throw new IllegalArgumentException(message);
+    }
+
+    public static void notEmpty(Collection<?> collection, String message){
+        if (collection == null || collection.isEmpty())
+            throw new IllegalArgumentException(message);
+
     }
 }

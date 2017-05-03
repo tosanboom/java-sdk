@@ -19,6 +19,8 @@ public class Common {
 
     public static class Deposit {
         public static final String DEPOSIT_NUMBER = "124-4-750-2";
+        public static final String IBAN_NUMBER = "IR100590012481303335585001";
+        public static final String OWNER_NAME = "آرمان کامروا";
         public static final String DEPOSIT_NUMBER_WITHDRAW = "110-70-1000000-1";
     }
 
