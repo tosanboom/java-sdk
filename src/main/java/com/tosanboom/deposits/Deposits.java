@@ -216,7 +216,7 @@ public class Deposits {
      * @throws IllegalArgumentException When one of parameters were null
      */
     public static AutoTransferReport getAutoTransferReports(ReportAutoTransferRequest request, BoomApi boomApi) {
-        Asserts.notNull(request, "Request can't be null");
+        if (request == null) request = ReportAutoTransferRequest.withoutFilter();
         Asserts.notNull(boomApi, "BoomApi can't be null");
 
         String url = boomApi.baseUrl() + "deposits/transfer/auto/reports";
@@ -251,5 +251,30 @@ public class Deposits {
                 .build();
 
         return Requests.sendRequest(httpRequest, BatchTransfer.class);
+    }
+
+    /**
+     * Get list of auto transfer that the user has been requested
+     *
+     * @param request Encapsulates some parameters to filtering received list of (auto) transfers
+     * @param boomApi Encapsulates the contextual information about the boom api
+     * @return List of information from (auto) transfers
+     * @throws com.tosanboom.RestApiException When a 4xx/5xx error returns from REST API
+     * @throws com.tosanboom.FailedRequestException When we couldn't send the request for whatever reason
+     * @throws com.tosanboom.JsonException When something went wrong during JSON serialization/de-serialization
+     * @throws IllegalArgumentException When {@code boomApi} was null
+     */
+    public static ListAutoTransfer getListAutoTransfer(ListAutoTransferRequest request, BoomApi boomApi) {
+        if (request == null) request = ListAutoTransferRequest.withoutFilter();
+
+        Asserts.notNull(boomApi, "boomApi can't be null");
+
+        String url = boomApi.baseUrl() + "deposits/transfer/auto/list";
+        Request httpRequest = Requests.withCommonHeaders(new Request.Builder(), boomApi)
+                .url(url)
+                .post(Json.of(request))
+                .build();
+
+        return Requests.sendRequest(httpRequest, ListAutoTransfer.class);
     }
 }

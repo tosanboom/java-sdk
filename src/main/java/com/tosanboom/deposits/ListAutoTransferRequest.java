@@ -4,34 +4,31 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * Encapsulates filtering options available to filter the list of reports for auto transfer
+ * Encapsulates filtering options available to filter the list of auto transfer
  *
- * <p>If you don't want to filter the returned report list, just create a {@linkplain ReportAutoTransferRequest} with
+ * <p>If you don't want to filter the returned list, just create a {@linkplain ListAutoTransferRequest} with
  * an empty filtering schema:
  * <pre>
- *     ReportAutoTransferRequest reportAutoTransferRequest = ReportAutoTransferRequest.withoutFilter()
+ *     ListAutoTransferRequest listAutoTransferRequest = ListAutoTransferRequest.withoutFilter()
  * </pre>
  * Otherwise, you can chain multiple parameters using the provided fluent interface:
  * <pre>
- *                      ReportAutoTransferRequest.newBuilder()
- *                                               .withSourceDepositNumber(sourceDeposit)
- *                                               .withDestinationDepositNumber(destinationDeposit)
- *                                               .withOffset(offset)
- *                                               .withLength(length)
- *                                               .withMinAmount(minAmount)
- *                                               .withMaxAmount(maxAmount)
- *                                               .withAutoTransferStatus(autoTransferStatus)
- *                                               .withSerial(serial)
- *                                               .withStartDate(startDate)
- *                                               .withEndDate(endDate)
- *                                               .build()
+ *                      ListAutoTransferRequest.newBuilder()
+ *                                             .withSourceDepositNumber(sourceDeposit)
+ *                                             .withOffset(offset)
+ *                                             .withLength(length)
+ *                                             .withMinAmount(minAmount)
+ *                                             .withMaxAmount(maxAmount)
+ *                                             .withSerial(serial)
+ *                                             .withStartDate(startDate)
+ *                                             .withEndDate(endDate)
+ *                                             .build()
  * </pre>
  *
  * @author Marjan Mehranfar
  */
-public class ReportAutoTransferRequest {
+public class ListAutoTransferRequest {
     final String sourceDepositNumber;
-    final String destinationDepositNumber;
     final String serial;
     final Date startDate;
     final Date endDate;
@@ -39,11 +36,9 @@ public class ReportAutoTransferRequest {
     final BigDecimal maxAmount;
     final Long offset;
     final Long length;
-    final AutoTransferStatus autoTransferStatus;
 
-    private ReportAutoTransferRequest(String sourceDepositNumber, String destinationDepositNumber, String serial,
-                                     Date startDate, Date endDate, BigDecimal minAmount, BigDecimal maxAmount,
-                                     Long offset, Long length, AutoTransferStatus autoTransferStatus) {
+    private ListAutoTransferRequest(String sourceDepositNumber, String serial, Date startDate, Date endDate,
+                                    BigDecimal minAmount, BigDecimal maxAmount, Long offset, Long length) {
 
         notZeroOrNegativeAmount(minAmount);
         notZeroOrNegativeAmount(maxAmount);
@@ -51,7 +46,6 @@ public class ReportAutoTransferRequest {
         notNegative(offset);
 
         this.sourceDepositNumber = sourceDepositNumber;
-        this.destinationDepositNumber = destinationDepositNumber;
         this.serial = serial;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -59,15 +53,14 @@ public class ReportAutoTransferRequest {
         this.maxAmount = maxAmount;
         this.offset = offset;
         this.length = length;
-        this.autoTransferStatus = autoTransferStatus;
     }
 
     /**
      * Method to create a filter-less request
      *
-     * @return An instance of {@linkplain ReportAutoTransferRequest}
+     * @return An instance of {@linkplain ListAutoTransferRequest}
      */
-    public static ReportAutoTransferRequest withoutFilter() {return new Builder().build(); }
+    public static ListAutoTransferRequest withoutFilter() {return new Builder().build(); }
 
     /**
      * @return An instance of {@linkplain Builder}
@@ -76,7 +69,6 @@ public class ReportAutoTransferRequest {
 
     public static class Builder {
         private String sourceDepositNumber;
-        private String destinationDepositNumber;
         private String serial;
         private Date startDate;
         private Date endDate;
@@ -84,7 +76,6 @@ public class ReportAutoTransferRequest {
         private BigDecimal maxAmount;
         private Long offset;
         private Long length;
-        private AutoTransferStatus autoTransferStatus;
 
         /**
          * The source deposit number of auto transfer
@@ -97,17 +88,7 @@ public class ReportAutoTransferRequest {
         }
 
         /**
-         * The deposit number of destination
-         *
-         * @param destinationDepositNumber The deposit number of destination
-         */
-        public Builder withDestinationDepositNumber(String destinationDepositNumber) {
-            this.destinationDepositNumber = destinationDepositNumber;
-            return this;
-        }
-
-        /**
-         * Get report of an auto transfer with the given {@code serial}
+         * Get list of an auto transfer with the given {@code serial}
          *
          * @param serial The serial of an auto transfer
          */
@@ -137,7 +118,7 @@ public class ReportAutoTransferRequest {
         }
 
         /**
-         * Determines the minimum amount of auto transfer to filter the reports
+         * Determines the minimum amount of auto transfer to filter the list
          *
          * @param minAmount The minimum amount
          */
@@ -147,7 +128,7 @@ public class ReportAutoTransferRequest {
         }
 
         /**
-         * Determines the maximum amount of auto transfer to filter the reports
+         * Determines the maximum amount of auto transfer to filter the list
          *
          * @param maxAmount The maximum amount
          */
@@ -177,29 +158,13 @@ public class ReportAutoTransferRequest {
         }
 
         /**
-         * Determines the state of an auto transfer
-         *
-         * @param autoTransferStatus The state of auto transfer
-         */
-        public Builder withAutoTransferStatus(AutoTransferStatus autoTransferStatus) {
-            this.autoTransferStatus = autoTransferStatus;
-            return this;
-        }
-
-        /**
          * It throws an {@link IllegalArgumentException}, If one of parameter weren't valid
          *
-         * @return An instance of {@linkplain ReportAutoTransferRequest}
+         * @return An instance of {@linkplain ListAutoTransferRequest}
          */
-        public ReportAutoTransferRequest build() {
-            return new ReportAutoTransferRequest(sourceDepositNumber, destinationDepositNumber, serial, startDate,
-                    endDate, minAmount, maxAmount, offset, length, autoTransferStatus); }
-    }
-
-
-    private void notBlankString(String depositNumber) {
-        if (depositNumber != null && depositNumber.trim().isEmpty())
-            throw new IllegalArgumentException("depositNumber can't be a blank string");
+        public ListAutoTransferRequest build() {
+            return new ListAutoTransferRequest(sourceDepositNumber, serial, startDate,
+                    endDate, minAmount, maxAmount, offset, length); }
     }
 
     private void notNegative(Long offset) {
@@ -209,7 +174,7 @@ public class ReportAutoTransferRequest {
 
     private void notZeroOrNegative(Long length) {
         if (length != null && length <= 0)
-            throw new IllegalArgumentException("Length can't be less than or equal to zero");
+            throw new IllegalArgumentException("length can't be less than or equal to zero");
     }
 
     private void notZeroOrNegativeAmount(BigDecimal amount) {
