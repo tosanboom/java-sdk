@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @author Mona Mohamadinia
  */
-public class AchTransfers {
+public class AchTransfersReport {
     private List<AchTransferReport> achTransferReports = new ArrayList<>();
     private Long totalRecord;
 
@@ -90,7 +90,7 @@ public class AchTransfers {
 
     @Override
     public String toString() {
-        return "AchTransfers{" +
+        return "AchTransfersReport{" +
                 "achTransferReports=" + achTransferReports +
                 ", totalRecord=" + totalRecord +
                 '}';

@@ -93,7 +93,7 @@ public class Ach {
      * @throws com.tosanboom.JsonException          When something went wrong during JSON serialization/de-serialization
      * @throws IllegalArgumentException             When one of the required parameters were {@code null}
      */
-    public static AchTransfers transferReports(AchTransferReportRequest request, BoomApi boomApi) {
+    public static AchTransfersReport transferReports(AchTransferReportRequest request, BoomApi boomApi) {
         Asserts.notNull(request, "request can't be a null value");
         Asserts.notNull(boomApi, "boomApi can't be a null value");
 
@@ -103,6 +103,30 @@ public class Ach {
                 .post(Json.of(request))
                 .build();
 
-        return Requests.sendRequest(httpRequest, AchTransfers.class);
+        return Requests.sendRequest(httpRequest, AchTransfersReport.class);
+    }
+
+    /**
+     * Calling the Ach transaction report service that return report of transaction.
+     *
+     * @param request Encapsulates a ach transaction report request parameters
+     * @param boomApi Encapsulates common headers to be sent over the wire to the boom API.
+     * @return Report of transaction
+     * @throws com.tosanboom.RestApiException       When a 4xx/5xx error returns from REST API
+     * @throws com.tosanboom.FailedRequestException When we couldn't send the request for whatever reason
+     * @throws com.tosanboom.JsonException          When something went wrong during JSON serialization/de-serialization
+     * @throws IllegalArgumentException             When one of the required parameters were {@code null}
+     */
+    public static AchTransactionsReport transactionReports(AchTransactionReportRequest request, BoomApi boomApi) {
+        Asserts.notNull(request, "request can't be a null value");
+        Asserts.notNull(boomApi, "boomApi can't be a null value");
+
+        String url = boomApi.baseUrl() + "ach/reports/transaction";
+        Request httpRequest = Requests.withCommonHeaders(new Request.Builder(), boomApi)
+                .url(url)
+                .post(Json.of(request))
+                .build();
+
+        return Requests.sendRequest(httpRequest, AchTransactionsReport.class);
     }
 }
