@@ -9,7 +9,7 @@ import static commons.Common.Deposit.OWNER_NAME
  * @author Mona Mohamadinia
  */
 class AchDestinationTransactionTest extends Specification {
-    def "Trying to build an invalid instance of AchDestinationTransaction will be prevented by throwing an exception"(){
+    def "Trying to build an invalid instance of AchDestinationTransaction will be prevented by throwing an exception"() {
 
         when:
             new AchDestinationTransaction(ibanNumber, ownerName, amount)

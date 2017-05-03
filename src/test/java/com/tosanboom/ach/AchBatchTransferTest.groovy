@@ -5,6 +5,7 @@ import spock.lang.Specification
 
 import static commons.Common.Deposit.*
 import static commons.Common.TestBoomApi.withTestSession
+import static java.util.Collections.singletonList
 
 /**
  * @author Mona Mohamadinia
@@ -14,7 +15,7 @@ class AchBatchTransferTest extends Specification{
         given:
             def boomApi = withTestSession();
             def achDestinationTransaction = new AchDestinationTransaction(IBAN_NUMBER, OWNER_NAME, 10000)
-            def request = new AchBatchTransferRequest(DEPOSIT_NUMBER, achDestinationTransaction as List<AchDestinationTransaction>)
+            def request = new AchBatchTransferRequest(DEPOSIT_NUMBER, singletonList(achDestinationTransaction))
 
         when:
             def paidInfo = Ach.batchTransfer(request, boomApi)
@@ -27,7 +28,7 @@ class AchBatchTransferTest extends Specification{
         given:
              def boomApi = withTestSession()
              def achDestinationTransaction = new AchDestinationTransaction(ibanNumber, OWNER_NAME, 10000)
-             def request = new AchBatchTransferRequest(depositNumber, achDestinationTransaction as List<AchDestinationTransaction>)
+             def request = new AchBatchTransferRequest(depositNumber, singletonList(achDestinationTransaction))
 
         when:
             Ach.batchTransfer(request, boomApi)
@@ -46,7 +47,7 @@ class AchBatchTransferTest extends Specification{
         given:
              def boomApi = withTestSession()
              def achDestinationTransaction = new AchDestinationTransaction(IBAN_NUMBER, OWNER_NAME, 10000)
-             def request = new AchBatchTransferRequest(depositNumber, achDestinationTransaction as List<AchDestinationTransaction>)
+             def request = new AchBatchTransferRequest(depositNumber,  singletonList(achDestinationTransaction))
 
         when:
             Ach.batchTransfer(request, boomApi)

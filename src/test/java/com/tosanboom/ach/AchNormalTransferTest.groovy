@@ -10,7 +10,7 @@ import static commons.Common.Deposit.*
  * @author Mona Mohamadinia
  */
 class AchNormalTransferTest extends Specification{
-    def "with valid parameter ach normal transfer should return transfer info"(){
+    def "with valid parameter ach normal transfer should return transfer info"() {
         given:
              def boomApi = Common.TestBoomApi.withTestSession();
              def request = AchNormalTransferRequest.newBuilder()
@@ -26,7 +26,7 @@ class AchNormalTransferTest extends Specification{
              paidInfo != null
     }
 
-    def "with invalid parameter ach normal transfer should return an exception"(){
+    def "with invalid parameter ach normal transfer should return an exception"() {
         given:
              def boomApi = Common.TestBoomApi.withTestSession();
              def request = AchNormalTransferRequest.newBuilder()
@@ -40,22 +40,22 @@ class AchNormalTransferTest extends Specification{
 
         then:
             def e = thrown(RestApiException)
-                e.errorResponse.code == "071"
+            e.errorResponse.code == "071"
         where:
             depositNumber | ibanNumber  | ownerName  | amount
               "invalid"   | IBAN_NUMBER | OWNER_NAME | 100000
            DEPOSIT_NUMBER |  "invalid"  | OWNER_NAME | 100000
     }
 
-    def "with invalid deposit number ach normal transfer should return an exception"(){
+    def "with invalid deposit number ach normal transfer should return an exception"() {
         given:
-        def boomApi = Common.TestBoomApi.withTestSession();
-        def request = AchNormalTransferRequest.newBuilder()
-                .withSourceDepositNumber(depositNumber)
-                .withIbanNumber(ibanNumber)
-                .withOwnerName(ownerName)
-                .withAmount(amount)
-                .build()
+            def boomApi = Common.TestBoomApi.withTestSession();
+            def request = AchNormalTransferRequest.newBuilder()
+                    .withSourceDepositNumber(depositNumber)
+                    .withIbanNumber(ibanNumber)
+                    .withOwnerName(ownerName)
+                    .withAmount(amount)
+                    .build()
         when:
            Ach.normalTransfer(request, boomApi)
 

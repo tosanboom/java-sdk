@@ -8,7 +8,7 @@ import static commons.Common.Deposit.*
  * @author Mona Mohamadinia
  */
 class AchNormalTransferRequestTest extends Specification {
-    def "Trying to build an invalid instance of AchNormalTransfer will be prevented by throwing an exception"(){
+    def "Trying to build an invalid instance of AchNormalTransfer will be prevented by throwing an exception"() {
         when:
             AchNormalTransferRequest.newBuilder().withSourceDepositNumber(sourceDepositNumber)
                                                  .withIbanNumber(ibanNumber)

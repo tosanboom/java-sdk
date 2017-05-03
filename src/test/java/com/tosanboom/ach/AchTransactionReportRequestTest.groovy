@@ -8,7 +8,7 @@ import static commons.Common.TestBoomApi.date
 /**
  * @author Mona Mohamadinia
  */
-class AchTransactionReportRequestTest extends Specification{
+class AchTransactionReportRequestTest extends Specification {
     def "Trying to build an invalid instance of AchTransactionReport will be prevented by throwing an exception"() {
         when:
             AchTransactionReportRequest.newBuilder()

@@ -21,7 +21,7 @@ class AchTransactionReportTest extends Specification {
             reports != null
     }
 
-    def "With invalid parameter ach transaction report should throw an exception"(){
+    def "With invalid parameter ach transaction report should throw an exception"() {
         given:
             def boomApi = withTestSession();
             def request = AchTransactionReportRequest.newBuilder()
