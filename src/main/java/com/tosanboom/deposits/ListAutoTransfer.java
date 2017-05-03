@@ -51,7 +51,7 @@ public class ListAutoTransfer {
         }
 
         /**
-         * Count of transaction were successful
+         * Number of transactions were successful
          */
         public Short successTransactionNumber() {
             return successTransactionNumber;
@@ -72,14 +72,14 @@ public class ListAutoTransfer {
         }
 
         /**
-         * filtering list till to end date that they were requested
+         * Filtering list till to end date that they were requested
          */
         public Date endDate() {
             return endDate;
         }
 
         /**
-         * Count of all (auto) transfer requested
+         * Number of all (auto) transfers requested
          */
         public Short transactionCount() {
             return transactionCount;
@@ -100,28 +100,28 @@ public class ListAutoTransfer {
         }
 
         /**
-         * Count of transactions Have not been processed yet
+         * Number of transactions have not been processed yet
          */
         public Long unProcessedCount() {
             return unProcessedCount;
         }
 
         /**
-         * Count of transactions have been failed
+         * Number of transactions have been failed
          */
         public Long failedCount() {
             return failedCount;
         }
 
         /**
-         * Count of transactions have been suspended
+         * Number of transactions have been suspended
          */
         public Long suspendedCount() {
             return suspendedCount;
         }
 
         /**
-         * Represents state of auto transferred
+         * Represents state of auto transfer
          */
         public AutoTransferStatus autoTransferStatus() {
             return autoTransferStatus;
