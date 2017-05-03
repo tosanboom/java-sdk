@@ -33,4 +33,25 @@ public class Loans {
 
         return Requests.sendRequest(httpRequest, LoanDetails.class);
     }
+
+    /**
+     * Retrieves owner information for the specified loan
+     *
+     * @param loanNumber The loan number to see its loan owner information
+     * @param boomApi Encapsulates contextual information about the boom API
+     * @return An instance of {@link LoanOwner} representing the details of the given loan owner
+     * @throws com.tosanboom.RestApiException If REST API return a 4xx/5xx error
+     * @throws com.tosanboom.FailedRequestException When we couldn't manage to send the request
+     * @throws com.tosanboom.JsonException If we couldn't read/write the JSON to/from a pojo
+     * @throws IllegalArgumentException If either of required parameters were {@code null} or invalid
+     */
+    public static LoanOwner getLoanOwner(String loanNumber, BoomApi boomApi) {
+        Asserts.notBlank(loanNumber, "loanNumber can't be blank");
+        Asserts.notNull(boomApi, "boomApi can't be null");
+
+        String url = boomApi.baseUrl() + "loans/owner?loan_number=" + loanNumber;
+        Request httpRequest = Requests.withCommonHeaders(new Request.Builder(), boomApi).url(url).get().build();
+
+        return Requests.sendRequest(httpRequest, LoanOwner.class);
+    }
 }
