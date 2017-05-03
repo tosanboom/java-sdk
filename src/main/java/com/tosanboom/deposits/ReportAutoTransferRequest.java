@@ -70,7 +70,7 @@ public class ReportAutoTransferRequest {
     public static ReportAutoTransferRequest withoutFilter() {return new Builder().build(); }
 
     /**
-     * @return An instance of {@linkplain com.tosanboom.cards.CardListRequest.Builder}
+     * @return An instance of {@linkplain Builder}
      */
     public static Builder newBuilder() {return new Builder(); }
 

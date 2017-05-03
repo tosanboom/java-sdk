@@ -216,7 +216,8 @@ public class Deposits {
      * @throws IllegalArgumentException When one of parameters were null
      */
     public static AutoTransferReport getAutoTransferReports(ReportAutoTransferRequest request, BoomApi boomApi) {
-        Asserts.notNull(request, "Request can't be null");
+        if (request == null) request = ReportAutoTransferRequest.withoutFilter();
+
         Asserts.notNull(boomApi, "BoomApi can't be null");
 
         String url = boomApi.baseUrl() + "deposits/transfer/auto/reports";
