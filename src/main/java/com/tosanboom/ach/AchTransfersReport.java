@@ -1,6 +1,5 @@
 package com.tosanboom.ach;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,14 +8,9 @@ import java.util.List;
  */
 public class AchTransfersReport {
     private List<AchTransferReport> achTransferReports = new ArrayList<>();
-    private Long totalRecord;
 
     public List<AchTransferReport> achTransferReports() {
         return achTransferReports;
-    }
-
-    public Long getTotalRecord() {
-        return totalRecord;
     }
 
     public static class AchTransferReport {
@@ -92,7 +86,6 @@ public class AchTransfersReport {
     public String toString() {
         return "AchTransfersReport{" +
                 "achTransferReports=" + achTransferReports +
-                ", totalRecord=" + totalRecord +
                 '}';
     }
 }
