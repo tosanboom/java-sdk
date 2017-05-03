@@ -227,4 +227,29 @@ public class Deposits {
 
         return Requests.sendRequest(httpRequest, AutoTransferReport.class);
     }
+
+    /**
+     * Batch transfer to given destinations encapsulated in the given {@linkplain BatchTransferRequest}
+     *
+     * @param request It has required and optional parameters to batch transfer from a source deposit number
+     * to one or many destination deposit numbers
+     * @param boomApi Encapsulates the contextual information about the boom api
+     * @return An instance of {@linkplain BatchTransfer} that represents the response of each transfer
+     * @throws com.tosanboom.RestApiException When a 4xx/5xx error returns from REST API
+     * @throws com.tosanboom.FailedRequestException When we couldn't send the request for whatever reason
+     * @throws com.tosanboom.JsonException When something went wrong during JSON serialization/de-serialization
+     * @throws IllegalArgumentException If either of parameters were {@code null}
+     */
+    public static BatchTransfer batchTransfer(BatchTransferRequest request, BoomApi boomApi) {
+        Asserts.notNull(request, "The request parameter can not be null");
+        Asserts.notNull(boomApi, "The boomApi parameter can not be null");
+
+        String url = boomApi.baseUrl() + "deposits/transfer/batch";
+        Request httpRequest = Requests.withCommonHeaders(new Request.Builder(), boomApi)
+                .url(url)
+                .post(Json.of(request))
+                .build();
+
+        return Requests.sendRequest(httpRequest, BatchTransfer.class);
+    }
 }
