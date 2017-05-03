@@ -29,21 +29,30 @@ public class Common {
         public static final String EXP = "9911";
     }
 
+    public static class Bill {
+        public static final String BILL_ID = "2519128609051";
+        public static final String PAY_ID = "48062127";
+    }
+
     public static class Store {
         public static final String DEVICE_ID = "123456789";
         public static final String TOKEN = "08d4032deeb68a719e52d38be8f869c4";
         public static final String APP_KEY = "12374";
     }
 
+    public static class Loan {
+        public static final String LOAN_NUMBER = "124.120.7451.1";
+    }
+
     public static class TestBoomApi {
         public static BoomApi forCardService() {
             return BoomApi.newBuilder()
-                          .withBoomToken(Store.TOKEN)
-                          .withDeviceId(Store.DEVICE_ID)
-                          .withAppKey(Store.APP_KEY)
-                          .withBank(Bank.ANSAR)
-                          .setSandbox(true)
-                          .build();
+                    .withBoomToken(Store.TOKEN)
+                    .withDeviceId(Store.DEVICE_ID)
+                    .withAppKey(Store.APP_KEY)
+                    .withBank(Bank.ANSAR)
+                    .setSandbox(true)
+                    .build();
         }
 
         public static BoomApi withTestSession() {
