@@ -1,7 +1,7 @@
 package com.tosanboom;
 
 public class BoomApi {
-    private static final String DEFAULT_BASE_URL = "https://app.tosanboom.com/v1/";
+    private static final String DEFAULT_BASE_URL = "https://app.tosanboom.com:4432/v1/";
 
     private final String baseUrl;
     private final String accessToken;
