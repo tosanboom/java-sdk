@@ -1,4 +1,4 @@
-Java SDK for Boom API
+Java SDK for Boom API [![Build Status](https://api.travis-ci.org/tosanboom/java-sdk.svg?branch=master)](https://api.travis-ci.org/tosanboom/java-sdk)
 =====================
 The Java SDK for Boom API, provides a comprehensive and yet easy to use SDK for calling Boom's REST API. This SDK requires
 at minimum Java 7.
