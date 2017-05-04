@@ -2,10 +2,12 @@ package com.tosanboom.deposits
 
 import com.tosanboom.RestApiException
 import commons.Common
+import spock.lang.Ignore
 import spock.lang.Specification
 import static com.tosanboom.deposits.Deposits.cancelAutoTransfer
 
 class CancelAutoTransferTest extends Specification {
+    @Ignore
     def "With valid parameter, It cancel autoTransfer"() {
         given:
             def boomApi = Common.TestBoomApi.withTestSession()
