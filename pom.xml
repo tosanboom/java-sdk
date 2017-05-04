@@ -6,7 +6,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ir.boommarket</groupId>
     <artifactId>java-sdk</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>
+        The Java SDK for Boom API, provides a comprehensive and yet easy to use SDK for calling Boom's REST API
+    </description>
+    <url>http://boommarket.ir</url>
 
     <properties>
         <java.version>1.7</java.version>
@@ -33,9 +39,36 @@
         </dependency>
     </dependencies>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>1.6</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.0.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.10.4</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>1.6.7</version>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -49,6 +82,56 @@
             </plugins>
         </pluginManagement>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <additionalparam>-Xdoclint:none</additionalparam>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.gmavenplus</groupId>
                 <artifactId>gmavenplus-plugin</artifactId>
@@ -81,4 +164,38 @@
             </plugin>
         </plugins>
     </build>
+
+    <developers>
+        <developer>
+            <name>Ali Dehghani</name>
+            <email>ali.dehghani.g@gmail.com</email>
+            <organization>Boommarket</organization>
+            <organizationUrl>https://github.com/tosanboom</organizationUrl>
+        </developer>
+        <developer>
+            <name>Mona Mohamadinia</name>
+            <email>mona.mohamadinia@gmail.com </email>
+            <organization>Boommarket</organization>
+            <organizationUrl>https://github.com/tosanboom</organizationUrl>
+        </developer>
+        <developer>
+            <name>Marjan Mehranfar</name>
+            <email>marjanmehranfar@gmail.com </email>
+            <organization>Boommarket</organization>
+            <organizationUrl>https://github.com/tosanboom</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/tosanboom/java-sdk</connection>
+        <developerConnection>scm:git:ssh://github.com:tosanboom/java-sdk.git</developerConnection>
+        <url>https://github.com/tosanboom/java-sdk/tree/master</url>
+    </scm>
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
 </project>
