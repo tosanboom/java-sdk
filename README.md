@@ -11,12 +11,12 @@ Download [the latest JAR][latest-jar] or grab via Maven:
     <dependency>
       <groupId>ir.boommarket</groupId>
       <artifactId>java-sdk</artifactId>
-      <version>0.0.1</version>
+      <version>1.0.0</version>
     </dependency>
 
 or Gradle:
 
-    compile 'ir.boommarket:java-sdk:0.0.1'
+    compile 'ir.boommarket:java-sdk:1.0.0'
 
 Getting Started
 --------
